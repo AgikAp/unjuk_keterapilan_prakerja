@@ -21,3 +21,9 @@ func ConvertNoteModelToNoteResponses(noteModels []model.Note) (responses []dto.N
 	}
 	return
 }
+
+func ConvertNoteRequestToNoteModel(noteRequest dto.NoteRequest) (response model.Note) {
+	response.Title = noteRequest.Title
+	response.Note = noteRequest.Notes
+	return
+}

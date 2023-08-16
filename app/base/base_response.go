@@ -13,20 +13,22 @@ type baseReponse struct {
 	Data   interface{} `json:"data"`
 }
 
-func SetResponseSuccess(data interface{}) (br *baseReponse) {
+func SetResponseSuccess(data interface{}) *baseReponse {
+	br := baseReponse{}
 	br.Code = http.StatusOK
 	br.Status = "ok"
 	br.Data = data
 
-	return
+	return &br
 }
 
-func SetResponseError(err interface{}) (br *baseReponse) {
+func SetResponseError(err interface{}) *baseReponse {
+	br := baseReponse{}
 	br.Code = http.StatusBadRequest
 	br.Status = "bad_request"
 	br.Data = err
 
-	return
+	return &br
 }
 
 func (br *baseReponse) Thrown(c echo.Context) error {

@@ -8,6 +8,7 @@ import (
 	"unjuk_keterampilan/app/databases"
 	"unjuk_keterampilan/app/modules/notes"
 	"unjuk_keterampilan/app/modules/notes/repositorys"
+	userRepo "unjuk_keterampilan/app/modules/users/repositorys"
 	"unjuk_keterampilan/app/routes"
 
 	"github.com/google/wire"
@@ -17,6 +18,9 @@ import (
 var setVariabel = wire.NewSet(
 	repositorys.NewNoteRepository,
 	wire.Bind(new(repositorys.NoteRepositoryImpl), new(*repositorys.NoteRepository)),
+
+	userRepo.NewUserRepository,
+	wire.Bind(new(userRepo.UserRepositoryImpl), new(*userRepo.UserRepository)),
 
 	notes.NewNoteService,
 	wire.Bind(new(notes.NoteServiceImpl), new(*notes.NoteService)),

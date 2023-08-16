@@ -12,6 +12,7 @@ import (
 	"unjuk_keterampilan/app/databases"
 	"unjuk_keterampilan/app/modules/notes"
 	"unjuk_keterampilan/app/modules/notes/repositorys"
+	repositorys2 "unjuk_keterampilan/app/modules/users/repositorys"
 	"unjuk_keterampilan/app/routes"
 )
 
@@ -20,7 +21,8 @@ import (
 func SetupApp() *echo.Echo {
 	db := databases.NewConnection()
 	noteRepository := repositorys.NewNoteRepository(db)
-	noteService := notes.NewNoteService(noteRepository)
+	userRepository := repositorys2.NewUserRepository(db)
+	noteService := notes.NewNoteService(noteRepository, userRepository)
 	noteHandler := notes.NewNoteHandler(noteService)
 	echoEcho := routes.Routes(noteHandler)
 	return echoEcho
@@ -28,4 +30,4 @@ func SetupApp() *echo.Echo {
 
 // wire.go:
 
-var setVariabel = wire.NewSet(repositorys.NewNoteRepository, wire.Bind(new(repositorys.NoteRepositoryImpl), new(*repositorys.NoteRepository)), notes.NewNoteService, wire.Bind(new(notes.NoteServiceImpl), new(*notes.NoteService)), notes.NewNoteHandler, wire.Bind(new(notes.NoteHandlerImpl), new(*notes.NoteHandler)))
+var setVariabel = wire.NewSet(repositorys.NewNoteRepository, wire.Bind(new(repositorys.NoteRepositoryImpl), new(*repositorys.NoteRepository)), repositorys2.NewUserRepository, wire.Bind(new(repositorys2.UserRepositoryImpl), new(*repositorys2.UserRepository)), notes.NewNoteService, wire.Bind(new(notes.NoteServiceImpl), new(*notes.NoteService)), notes.NewNoteHandler, wire.Bind(new(notes.NoteHandlerImpl), new(*notes.NoteHandler)))

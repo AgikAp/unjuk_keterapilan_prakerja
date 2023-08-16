@@ -1,0 +1,14 @@
+{
+  "app": {
+    "port": 5000
+  },
+  "database": {
+    "host": "localhost",
+    "user": "postgres",
+    "pass": "root",
+    "port": "5432",
+    "dbname": "unjuk_keterampilan",
+    "sslmode": "disable",
+    "timezone": "Asia/Jakarta"
+  }
+}

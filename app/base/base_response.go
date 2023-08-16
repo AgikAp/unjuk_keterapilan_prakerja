@@ -6,14 +6,14 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type BaseReponse struct {
+type baseReponse struct {
 	Code   int         `json:"code"`
 	Status string      `json:"status"`
 	Error  interface{} `json:"error"`
 	Data   interface{} `json:"data"`
 }
 
-func SetResponseSuccess(data interface{}) (br *BaseReponse) {
+func SetResponseSuccess(data interface{}) (br *baseReponse) {
 	br.Code = http.StatusOK
 	br.Status = "ok"
 	br.Data = data
@@ -21,7 +21,7 @@ func SetResponseSuccess(data interface{}) (br *BaseReponse) {
 	return
 }
 
-func SetResponseError(err interface{}) (br *BaseReponse) {
+func SetResponseError(err interface{}) (br *baseReponse) {
 	br.Code = http.StatusBadRequest
 	br.Status = "bad_request"
 	br.Data = err
@@ -29,6 +29,6 @@ func SetResponseError(err interface{}) (br *BaseReponse) {
 	return
 }
 
-func (br *BaseReponse) Thrown(c echo.Context) error {
+func (br *baseReponse) Thrown(c echo.Context) error {
 	return c.JSON(br.Code, br)
 }

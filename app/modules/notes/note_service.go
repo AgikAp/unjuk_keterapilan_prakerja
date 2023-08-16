@@ -1,13 +1,28 @@
 package notes
 
-import "unjuk_keterampilan/app/modules/notes/repositorys"
+import (
+	"unjuk_keterampilan/app/modules/notes/dto"
+	"unjuk_keterampilan/app/modules/notes/mapper"
+	"unjuk_keterampilan/app/modules/notes/repositorys"
+)
 
 type NoteService struct {
 	noteRepository repositorys.NoteRepositoryImpl
 }
 
-type NoteServiceImpl interface{}
+type NoteServiceImpl interface {
+	GetNotes() (responses []dto.NoteResponse, err error)
+}
 
-func NewNoteRepository(noteRepository repositorys.NoteRepositoryImpl) *NoteService {
+func NewNoteService(noteRepository repositorys.NoteRepositoryImpl) *NoteService {
 	return &NoteService{noteRepository}
+}
+
+func (ns *NoteService) GetNotes() (responses []dto.NoteResponse, err error) {
+	notes, err := ns.noteRepository.GetNotes()
+	if err != nil {
+		return
+	}
+	responses = mapper.ConvertNoteModelToNoteResponses(notes)
+	return
 }

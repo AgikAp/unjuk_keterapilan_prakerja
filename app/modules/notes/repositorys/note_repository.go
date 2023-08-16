@@ -1,13 +1,24 @@
 package repositorys
 
-import "gorm.io/gorm"
+import (
+	"unjuk_keterampilan/app/modules/notes/model"
+
+	"gorm.io/gorm"
+)
 
 type NoteRepository struct {
 	db *gorm.DB
 }
 
-type NoteRepositoryImpl interface{}
+type NoteRepositoryImpl interface {
+	GetNotes() (response []model.Note, err error)
+}
 
 func NewNoteRepository(db *gorm.DB) *NoteRepository {
 	return &NoteRepository{db}
+}
+
+func (nr *NoteRepository) GetNotes() (response []model.Note, err error) {
+	err = nr.db.Model(model.Note{}).Preload("User").Find(&response).Error
+	return
 }

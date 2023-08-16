@@ -1,8 +1,15 @@
 package routes
 
-import "github.com/labstack/echo/v4"
+import (
+	"unjuk_keterampilan/app/modules/notes"
 
-func Routes() *echo.Echo {
+	"github.com/labstack/echo/v4"
+)
+
+func Routes(noteHandler notes.NoteHandlerImpl) *echo.Echo {
 	e := echo.New()
+	api := e.Group("/api")
+	note := api.Group("/note")
+	note.GET("/", noteHandler.GetNotes)
 	return e
 }
